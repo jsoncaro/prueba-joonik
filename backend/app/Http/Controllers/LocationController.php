@@ -3,37 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Location;
+use App\Http\Requests\StoreLocationRequest;
+use App\Http\Resources\LocationResource;
+use App\Services\LocationService;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class LocationController extends Controller
 {
-    public function index(Request $request)
+    public function __construct(private LocationService $locationService) {}
+
+    public function index(Request $request): JsonResponse
     {
-        $query = Location::query();
-
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('code')) {
-            $query->where('code', 'like', '%' . $request->code . '%');
-        }
-
+        $locations = $this->locationService->getAllWithFilters($request);
         return response()->json([
-            'data' => $query->get()
+            'data' => LocationResource::collection($locations)
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreLocationRequest $request): JsonResponse
     {
-        $data = $request->validate([
-            'code' => 'required|string|unique:locations,code',
-            'name' => 'required|string',
-            'image' => 'nullable|url',
-        ]);
-
-        Location::create($data);
-        return response()->json(['data' => $data], 201);
+        $location = $this->locationService->create($request->validated());
+        return response()->json(new LocationResource($location), 201);
     }
 }

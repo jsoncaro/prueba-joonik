@@ -5,5 +5,7 @@ use App\Http\Controllers\LocationController;
 
 Route::prefix('v1')->group(function () {
     Route::get('locations', [LocationController::class, 'index']);
-    Route::post('locations', [LocationController::class, 'store']);
+    Route::middleware(['throttle:create-locations'])->group(function () {
+        Route::post('/locations', [LocationController::class, 'store']);
+    });
 });
