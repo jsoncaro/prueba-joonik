@@ -16,8 +16,10 @@ class LocationController extends Controller
     public function index(Request $request): JsonResponse
     {
         $locations = $this->locationService->getAllWithFilters($request);
+
         return response()->json([
-            'data' => LocationResource::collection($locations)
+            'data' => LocationResource::collection($locations),
+            'total' => $locations->total(),
         ]);
     }
 
