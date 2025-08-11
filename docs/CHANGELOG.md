@@ -5,8 +5,8 @@ Todas las modificaciones importantes de este proyecto se documentan en este arch
 ## [Unreleased]
 
 ## [1.4.0] - 2025-08-10
-### Test (frontend)
-- agregar pruebas unitarias para LocationList con paginación y filtros.
+### Docs
+- agregar README.md,  CHANGELOG.md y database.sqlite.
 
 ## [1.3.0] - 2025-08-10
 ### Test (frontend)
