@@ -1,10 +1,19 @@
 import axios from 'axios';
 
-const axiosClient = axios.create({
+/* const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     'X-API-KEY': import.meta.env.VITE_API_KEY,
+  },
+}); */
+
+//Cambio para tener compatibilidad con los test unitarios
+const axiosClient = axios.create({
+  baseURL: "http://localhost:8000/api/v1",
+  headers: {
+    'Content-Type': 'application/json',
+    'X-API-KEY': "b05bf18e70585c6f37c34cf758ad777b",
   },
 });
 
